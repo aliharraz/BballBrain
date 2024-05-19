@@ -41,29 +41,8 @@ To run this project locally, follow these steps:
    Open your web browser and go to http://localhost:8080
 
 ## Directory Structure
-file_upload_service/
-├── src/
-│   ├── main/
-│   │   ├── java/com/bballbrain/fileuploadservice/
-│   │   │   ├── controller/             # Controllers for handling HTTP requests
-│   │   │   ├── model/                  # Entity classes and database repositories
-│   │   │   ├── repository/             # Spring Data JPA repositories
-│   │   │   ├── service/                # Service layer implementing business logic
-│   │   │   ├── FileUploadServiceApplication.java  # Main Spring Boot application class
-│   │   ├── resources/
-│   │   │   ├── application.properties  # Application configuration file
-│   │   │   ├── static/                 # Static resources (e.g., uploaded files)
-│   │   │   ├── templates/              # HTML templates (if any)
-│   ├── test/
-│   │   ├── java/com/bballbrain/fileuploadservice/
-│   │   │   ├── controller/             # Unit and integration tests for controllers
-│   │   │   ├── service/                # Unit tests for service layer
-├── target/                             # Compiled files (auto-generated)
-├── upload-dir/                         # Storage directory for uploaded files (auto-generated)
-├── mvnw                                # Maven wrapper script for Unix
-├── mvnw.cmd                            # Maven wrapper script for Windows
-├── pom.xml                             # Project configuration file
-└── README.md                           # Project README file
+![image](https://github.com/aliharraz/file_upload_service/assets/104687814/e179d313-445d-4057-9e25-1527cd3655e5)
+
 
 
 
