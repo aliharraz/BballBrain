@@ -1,51 +1,36 @@
 package Controllers;
 
-
-
 import Entities.Post;
 import Services.PostService;
-//import Security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-//    @Autowired
-//    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
     @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
-
-    @GetMapping("/coach/{coachId}")
-    public List<Post> getPostsByCoachId(@PathVariable Long coachId) {
-        return postService.getPostsByCoachId(coachId);
+    public ResponseEntity<List<Post>> getAllPostsForUser() {
+        List<Post> posts = postService.getPostsForUser();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post, HttpServletRequest request) {
-        String token = request.getHeader("Authorization").substring(7);
-//        String coachId = jwtAuthenticationFilter.extractUserIdFromToken(token);
-        String coachId = "20";
-        return postService.createPost(post, Long.valueOf(coachId));
-    }
-
-    @GetMapping("/{id}")
-    public Post getPostById(@PathVariable Long id) {
-        return postService.getPostById(id);
+    public ResponseEntity<Post> createPost(@RequestBody Post post, @RequestParam Long coachId) {
+        Post createdPost = postService.createPost(post, coachId);
+        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

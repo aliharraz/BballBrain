@@ -1,8 +1,6 @@
 package Entities;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,16 +22,20 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private boolean isPublic;
+
     // Constructors, getters, and setters
 
     public Post() {
     }
 
-    public Post(String title, String content, Long coachId, LocalDateTime createdAt) {
+    public Post(String title, String content, Long coachId, LocalDateTime createdAt, boolean isPublic) {
         this.title = title;
         this.content = content;
         this.coachId = coachId;
         this.createdAt = createdAt;
+        this.isPublic = isPublic;
     }
 
     public Long getId() {
@@ -74,5 +76,13 @@ public class Post {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 }
