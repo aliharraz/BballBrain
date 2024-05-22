@@ -1,7 +1,7 @@
-package Controllers;
+package com.Feed.BBallBrainFeed.Controllers;
 
-import Entities.Post;
-import Services.PostService;
+import com.Feed.BBallBrainFeed.Entities.Post;
+import com.Feed.BBallBrainFeed.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,21 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<Post>> getAllPostsForUser() {
+        System.out.println("HElllo");
         List<Post> posts = postService.getPostsForUser();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+//    @PostMapping
+//    public ResponseEntity<Post> createPost(@RequestBody Post post, @RequestParam Long coachId) {
+//        Post createdPost = postService.createPost(post, coachId);
+//        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+//    }
+
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post, @RequestParam Long coachId) {
-        Post createdPost = postService.createPost(post, coachId);
+    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+        System.out.println(post.toString());
+        Post createdPost = postService.createPost(post);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 

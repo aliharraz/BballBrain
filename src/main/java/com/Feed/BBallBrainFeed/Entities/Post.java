@@ -1,8 +1,14 @@
-package Entities;
+package com.Feed.BBallBrainFeed.Entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Post {
 
@@ -10,33 +16,23 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+
     private String title;
 
-    @Column(nullable = false)
+
     private String content;
 
-    @Column(nullable = false)
+
     private Long coachId; // Assuming coachId is used to identify the coach
 
-    @Column(nullable = false)
+
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+
     private boolean isPublic;
 
     // Constructors, getters, and setters
 
-    public Post() {
-    }
-
-    public Post(String title, String content, Long coachId, LocalDateTime createdAt, boolean isPublic) {
-        this.title = title;
-        this.content = content;
-        this.coachId = coachId;
-        this.createdAt = createdAt;
-        this.isPublic = isPublic;
-    }
 
     public Long getId() {
         return id;
@@ -82,7 +78,7 @@ public class Post {
         return isPublic;
     }
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }
