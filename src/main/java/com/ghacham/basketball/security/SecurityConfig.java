@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 
 public class SecurityConfig {
-    @Bean
+    
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
@@ -36,7 +36,7 @@ public class SecurityConfig {
          return http.build();
             }
 /*
-    @Bean
+    
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
@@ -50,7 +50,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+    
     public UserDetailsService userDetailsService() {
         UserDetails coach = User.builder()
             .username("coach")
@@ -67,7 +67,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(coach, player);
     }
 
-    @Bean
+    
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

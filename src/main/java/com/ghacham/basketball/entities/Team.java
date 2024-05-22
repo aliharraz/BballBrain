@@ -6,9 +6,11 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "Team")
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@Entity
+@Table(name = "team")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +21,21 @@ public class Team {
 
     @Column(name = "city") // Mapping to the column "team_name" in the database
     private String city;
-
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "team")
     private Set<Player> players;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "team")
     private Coach coach;
+    
+    @JsonIgnore
+	@OneToMany(mappedBy = "team")
+    private List<Schema> schemas;
+
+    @OneToMany(mappedBy = "team")
+    private List<Announcement> announcements;
 
     public Long getTeamId() {
 		return teamId;
@@ -82,11 +93,6 @@ public class Team {
 		this.announcements = announcements;
 	}
 
-	@OneToMany(mappedBy = "team")
-    private List<Schema> schemas;
-
-    @OneToMany(mappedBy = "team")
-    private List<Announcement> announcements;
 
     // Getters and setters
 }

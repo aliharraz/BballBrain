@@ -8,5 +8,6 @@ import com.ghacham.basketball.entities.Team;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
-    // Ajoutez des méthodes spécifiques si nécessaire
+    // Ajoutez des méthodes spécifiques si 
+
 }

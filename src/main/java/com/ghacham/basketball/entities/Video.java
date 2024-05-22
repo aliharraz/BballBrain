@@ -3,7 +3,7 @@ package com.ghacham.basketball.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Video")
+@Table(name = "video")
 
 public class Video {
     @Id

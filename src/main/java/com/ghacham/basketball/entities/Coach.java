@@ -1,12 +1,15 @@
 package com.ghacham.basketball.entities;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Coach")
+@Table(name = "coach")
 public class Coach {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +21,9 @@ public class Coach {
     @Column(name = "coach_age") // Mapping to the column "coach_name" in the database
     private int coachAge;
     
-    @OneToMany(mappedBy = "invitedByCoach")
-    private List<Player> invitedPlayers;
+   
 
+    
     public int getCoachAge() {
 		return coachAge;
 	}
@@ -28,7 +31,9 @@ public class Coach {
 	public void setCoachAge(int coachAge) {
 		this.coachAge = coachAge;
 	}
-
+	
+	
+	@JsonBackReference
 	@ManyToOne
     private Team team;
 
@@ -56,11 +61,5 @@ public class Coach {
     public void setTeam(Team team) {
         this.team = team;
     }
-    public List<Player> getInvitedPlayers() {
-        return invitedPlayers;
-    }
 
-    public void setInvitedPlayers(List<Player> invitedPlayers) {
-        this.invitedPlayers = invitedPlayers;
-    }
 }

@@ -4,7 +4,7 @@ package com.ghacham.basketball.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Utilisateur")
+@Table(name = "utilisateur")
 
 public class Utilisateur {
     @Id

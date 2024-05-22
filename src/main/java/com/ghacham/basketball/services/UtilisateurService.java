@@ -27,13 +27,13 @@ public class UtilisateurService {
 		return utilisateurRepository.findByEmail(email);
 	}
     
-    @Autowired
+    /*@Autowired
     private PasswordEncoder passwordEncoder;
 
     public Utilisateur createUser(Utilisateur utilisateur) {
         utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         return utilisateurRepository.save(utilisateur);
-    }
+    }*/
     
     // Autres méthodes pour la mise à jour, la suppression, etc.
 }

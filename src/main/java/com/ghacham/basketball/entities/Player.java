@@ -1,44 +1,62 @@
-package com.ghacham.basketball.entities;
+	package com.ghacham.basketball.entities;
+	
+	import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
+	
+	@Entity
+	@Table(name = "player")
+	
+	public class Player {
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long playerId;
+	
+	    @Column(name = "player_name") // Mapping to the column "player_name" in the database
+	    private String playerName;
+	    
+	    @JsonBackReference
+	    @ManyToOne
+	    @JoinColumn(name = "team_id")
+	    private Team team;
+	    
+	    @JsonBackReference
+	    @ManyToOne
+	    @JoinColumn(name = "coach_id")
+	    private Coach coach;
+	
+	
+	
+		public Coach getCoach() {
+			return coach;
+		}
 
-@Entity
-@Table(name = "Player")
+		public void setCoach(Coach coach) {
+			this.coach = coach;
+		}
 
-public class Player {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long playerId;
-
-    @Column(name = "player_name") // Mapping to the column "player_name" in the database
-    private String playerName;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    // Getters and setters
-    public Long getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-}
+		// Getters and setters
+	    public Long getPlayerId() {
+	        return playerId;
+	    }
+	
+	    public void setPlayerId(Long playerId) {
+	        this.playerId = playerId;
+	    }
+	
+	    public String getPlayerName() {
+	        return playerName;
+	    }
+	
+	    public void setPlayerName(String playerName) {
+	        this.playerName = playerName;
+	    }
+	
+	    public Team getTeam() {
+	        return team;
+	    }
+	
+	    public void setTeam(Team team) {
+	        this.team = team;
+	    }
+	}

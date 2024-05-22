@@ -9,3 +9,4 @@ import com.ghacham.basketball.entities.Schema;
 public interface SchemaRepository extends JpaRepository<Schema, Long> {
     // Ajoutez des méthodes spécifiques si nécessaire
 }
+

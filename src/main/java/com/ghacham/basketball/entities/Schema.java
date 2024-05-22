@@ -1,10 +1,12 @@
 package com.ghacham.basketball.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Schema")
-
+@Table(name = "schema")
+@JsonIgnoreProperties({"team"}) 
 public class Schema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

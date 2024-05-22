@@ -10,4 +10,5 @@ import com.ghacham.basketball.entities.Player;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     // Ajoutez des méthodes spécifiques si nécessaire
+	
 }
