@@ -1,10 +1,6 @@
 package com.ghacham.basketball.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.Column;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -16,24 +12,12 @@ public class Coach {
 
     @Column(name = "coach_name") // Mapping to the column "coach_name" in the database
     private String coachName;
-    
-    @Column(name = "coach_age") // Mapping to the column "coach_name" in the database
+
+    @Column(name = "coach_age") // Mapping to the column "coach_age" in the database
     private int coachAge;
-    
-   
 
-    
-    public int getCoachAge() {
-		return coachAge;
-	}
-
-	public void setCoachAge(int coachAge) {
-		this.coachAge = coachAge;
-	}
-	
-	
-	@JsonBackReference
-	@ManyToOne
+    @JsonBackReference("team-coach")
+    @OneToOne
     private Team team;
 
     // Getters and setters
@@ -53,6 +37,14 @@ public class Coach {
         this.coachName = coachName;
     }
 
+    public int getCoachAge() {
+        return coachAge;
+    }
+
+    public void setCoachAge(int coachAge) {
+        this.coachAge = coachAge;
+    }
+
     public Team getTeam() {
         return team;
     }
@@ -60,5 +52,4 @@ public class Coach {
     public void setTeam(Team team) {
         this.team = team;
     }
-
 }

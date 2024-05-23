@@ -1,10 +1,9 @@
 package com.ghacham.basketball.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ghacham.basketball.clients.UtilisateurClient;
 import com.ghacham.basketball.entities.Player;
 import com.ghacham.basketball.entities.Team;
 import com.ghacham.basketball.exception.UnauthorizedException;
@@ -20,8 +19,6 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
     
-    @Autowired
-    private UtilisateurClient utilisateurClient;
 
     // Endpoint pour récupérer tous les teams
     @GetMapping
@@ -38,16 +35,21 @@ public class TeamController {
         }
         return ResponseEntity.ok().body(team);
     }
+    @PostMapping
+    public ResponseEntity<Team> createTeam(@RequestBody Team team) {
+        Team createdTeam = teamService.createTeam(team);
+        return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
+    }
 
     // Endpoint pour créer un nouveau team
-    @PostMapping
+    /*@PostMapping
     public Team createTeam(@RequestBody Team team, @RequestHeader("Authorization") String token) {
         String role = utilisateurClient.getUserRole(token);
         if (!"COACH".equals(role)) {
             throw new UnauthorizedException("Only coaches can create teams");
         }
         return teamService.createTeam(team);
-    }
+    }*/
 
     // Endpoint pour mettre à jour un team existant
     @PutMapping("/{id}")
@@ -68,7 +70,7 @@ public class TeamController {
         teamService.deleteTeam(teamId);
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/{id}/players")
+    /*@PostMapping("/{id}/players")
     public Team addPlayersToTeam(@PathVariable Long id, @RequestBody Set<Long> playerIds, @RequestHeader("Authorization") String token) {
         String role = utilisateurClient.getUserRole(token);
         if (!"COACH".equals(role)) {
@@ -80,5 +82,5 @@ public class TeamController {
             team.getPlayers().add(player);
         }
         return teamService.updateTeam(id, team);
-    }
+    }*/
 }

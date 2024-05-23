@@ -1,4 +1,4 @@
-package com.ghacham.basketball.clients;
+/*package com.ghacham.basketball.clients;
 
 import com.ghacham.basketball.entities.Player;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,4 +14,4 @@ public interface UtilisateurClient {
     
     @GetMapping("/utilisateur/role")
     String getUserRole(@RequestHeader("Authorization") String token);
-}
+}*/

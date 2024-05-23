@@ -3,7 +3,6 @@ package com.ghacham.basketball.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.ghacham.basketball.clients.UtilisateurClient;
 import com.ghacham.basketball.entities.Player;
 import com.ghacham.basketball.entities.Schema;
 import com.ghacham.basketball.services.SchemaService;
@@ -18,8 +17,7 @@ public class SchemaController {
     @Autowired
     private SchemaService schemaService;
     
-    @Autowired
-    private UtilisateurClient utilisateurClient;
+ 
 
     @GetMapping
     public List<Schema> getAllSchemas() {
@@ -46,7 +44,7 @@ public class SchemaController {
         schemaService.deleteSchema(id);
     }
     
-    @PostMapping("/{id}/players")
+    /*@PostMapping("/{id}/players")
     public void addPlayersToSchema(@PathVariable Long id, @RequestBody Set<Long> playerIds) {
         playerIds.forEach(playerId -> {
             Player player = utilisateurClient.getPlayerById(playerId);
@@ -60,7 +58,7 @@ public class SchemaController {
             Player player = utilisateurClient.getPlayerById(playerId);
             schemaService.removePlayerFromSchema(id, player);
         });
-    }
+    }*/
 
     // Autres méthodes pour la gestion des schémas
 }
