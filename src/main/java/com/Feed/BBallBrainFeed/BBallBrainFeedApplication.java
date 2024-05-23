@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.Feed.BBallBrainFeed.Feign")
-public class BBallBrainFeedApplication {
+public class 	BBallBrainFeedApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BBallBrainFeedApplication.class, args);

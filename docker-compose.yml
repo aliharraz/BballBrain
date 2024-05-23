@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  microservice:
+    build: .
+    expose:
+      - "8089"
+    ports:
+      - "8089:8089"
+    environment:
+      - JAVA_OPT=-Dspring.profiles.active=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/feedballbrain
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:        # Define the network here
+      - postgres
+
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: feedballbrain
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d feedballbrain"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
