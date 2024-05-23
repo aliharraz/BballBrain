@@ -44,21 +44,22 @@ public class PostService {
 //
 //    }
 
-//    public List<Post> getPostsForUser() {
-//
-//        String userID = "UserIDfromuserservice";
-//        String role = "Rolefromuserservice";
-//
-////        if ("ROLE_COACH".equals(role)) {
-////            return getPostsForCoach(userID);
-////        } else if ("ROLE_PLAYER".equals(role)) {
-////            coachId = postInterface.getCoachId(userID);
-////            return getPostsForCoach(coachId);
-////        } else {
-////            return postRepository.findByIsPublicTrue();  // Default to public posts for other roles or unauthenticated users
-////        }
-//        return postRepository.findByIsPublicTrue();
-//    }
+    public List<Post> getPostsForUser() {
+        List<Map<String, Object>> userList  = postInterface.getCurrentUsers().getBody();
+
+        Map<String, Object> user = userList.get(0);
+        String userID = String.valueOf(user.get("userID"));
+        String role = String.valueOf(user.get("role"));
+
+        if ("COACH".equals(role)) {
+            return getPostsForCoach(Long.parseLong(userID));
+//        } else if ("PLAYER".equals(role)) {
+//            coachId = postInterface.getCoachId(userID);
+//            return getPostsForCoach(coachId);
+        } else {
+            return postRepository.findByIsPublicTrue();  // Default to public posts for other roles or unauthenticated users
+        }
+    }
 
 
     private List<Post> getPostsForCoach(Long  coachId) {

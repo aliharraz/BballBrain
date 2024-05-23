@@ -27,12 +27,12 @@ public class PostController {
         return ResponseEntity.ok(users);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Post>> getAllPostsForUser() {
-//        System.out.println("HElllo");
-//        List<Post> posts = postService.getPostsForUser();
-//        return new ResponseEntity<>(posts, HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity<List<Post>> getAllPostsForUser() {
+
+        List<Post> posts = postService.getPostsForUser();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
 //    @PostMapping
 //    public ResponseEntity<Post> createPost(@RequestBody Post post, @RequestParam Long coachId) {

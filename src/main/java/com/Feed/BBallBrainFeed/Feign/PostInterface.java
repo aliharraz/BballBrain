@@ -16,7 +16,8 @@ import java.util.Map;
 public interface PostInterface {
 
     @GetMapping("users/current")
-    public ResponseEntity<List<Map<String, Object>>> getCurrentUsers();
+    public ResponseEntity<List<Map<String,
+            Object>>> getCurrentUsers();
 
 
 }
