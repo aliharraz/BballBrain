@@ -53,14 +53,10 @@ public class UserController {
     @GetMapping("/current")
     public ResponseEntity<List<Map<String, Object>>> getCurrentUsers() {
         Map<String, Object> user1 = new HashMap<>();
-        user1.put("username", "ALI");
-        user1.put("userID", 1234L);
+        user1.put("role", "COACH");
+        user1.put("userID", 123L);
 
-        Map<String, Object> user2 = new HashMap<>();
-        user2.put("username", "John");
-        user2.put("userID", 5678L);
-
-        List<Map<String, Object>> users = Arrays.asList(user1, user2);
+        List<Map<String, Object>> users = Arrays.asList(user1);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     //functionnality for basketball service ********************************************************************

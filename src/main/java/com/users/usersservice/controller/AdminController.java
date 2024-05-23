@@ -27,8 +27,4 @@ public class AdminController {
         List<Admin> admins = adminService.findAllAdmins();
         return ResponseEntity.ok(admins);
     }
-
-
-
-
 }
