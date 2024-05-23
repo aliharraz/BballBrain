@@ -1,5 +1,7 @@
 package com.ghacham.basketball.entities;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -19,7 +21,23 @@ public class Schema {
     @JoinColumn(name = "team_id") // Assuming the column name in Schema table referencing Team is team_id
     private Team team;
 
-    public Long getSchemaId() {
+    @ManyToMany
+    @JoinTable(
+        name = "schema_player",
+        joinColumns = @JoinColumn(name = "schema_id"),
+        inverseJoinColumns = @JoinColumn(name = "player_id")
+    )
+    private Set<Player> players;
+    
+    public Set<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Set<Player> players) {
+		this.players = players;
+	}
+
+	public Long getSchemaId() {
 		return schemaId;
 	}
 

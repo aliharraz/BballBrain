@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ghacham.basketball.clients.UtilisateurClient;
+import com.ghacham.basketball.entities.Player;
 import com.ghacham.basketball.entities.Team;
+import com.ghacham.basketball.exception.UnauthorizedException;
 import com.ghacham.basketball.services.TeamService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/teams")
@@ -15,6 +19,9 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
+    
+    @Autowired
+    private UtilisateurClient utilisateurClient;
 
     // Endpoint pour récupérer tous les teams
     @GetMapping
@@ -34,7 +41,11 @@ public class TeamController {
 
     // Endpoint pour créer un nouveau team
     @PostMapping
-    public Team createTeam(@RequestBody Team team) {
+    public Team createTeam(@RequestBody Team team, @RequestHeader("Authorization") String token) {
+        String role = utilisateurClient.getUserRole(token);
+        if (!"COACH".equals(role)) {
+            throw new UnauthorizedException("Only coaches can create teams");
+        }
         return teamService.createTeam(team);
     }
 
@@ -56,5 +67,18 @@ public class TeamController {
         }
         teamService.deleteTeam(teamId);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/{id}/players")
+    public Team addPlayersToTeam(@PathVariable Long id, @RequestBody Set<Long> playerIds, @RequestHeader("Authorization") String token) {
+        String role = utilisateurClient.getUserRole(token);
+        if (!"COACH".equals(role)) {
+            throw new UnauthorizedException("Only coaches can add players to teams");
+        }
+        Team team = teamService.getTeamById(id);
+        for (Long playerId : playerIds) {
+            Player player = utilisateurClient.getPlayerById(playerId);
+            team.getPlayers().add(player);
+        }
+        return teamService.updateTeam(id, team);
     }
 }

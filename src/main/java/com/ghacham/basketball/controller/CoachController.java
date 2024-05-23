@@ -58,6 +58,7 @@ public class CoachController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
+    /*
     @PostMapping("/{coachId}/invite")
     public ResponseEntity<Coach> sendInvitationToPlayer(@PathVariable Long coachId, @RequestBody Player player) {
         Coach updatedCoach = coachService.sendInvitationToPlayer(coachId, player);
@@ -76,7 +77,7 @@ public class CoachController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    } */
 
     // Autres méthodes pour la mise à jour, la suppression, etc.
 }

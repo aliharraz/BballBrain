@@ -49,6 +49,8 @@ public class CoachService {
     public void deleteCoachById(Long id) {
         coachRepository.deleteById(id);
     }
+    
+    /*
     public Coach sendInvitationToPlayer(Long coachId, Player player) {
         Coach coach = coachRepository.findById(coachId).orElse(null);
         if (coach != null) {
@@ -69,7 +71,7 @@ public class CoachService {
             return coachRepository.save(coach);
         }
         return null;
-    }
+    }*/
 
 
     // Autres méthodes pour la mise à jour, la suppression, etc.
