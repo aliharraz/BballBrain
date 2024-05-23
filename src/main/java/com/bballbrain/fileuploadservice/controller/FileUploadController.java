@@ -6,11 +6,13 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/files")
 public class FileUploadController {
     @Autowired
@@ -20,6 +22,10 @@ public class FileUploadController {
     public ResponseEntity<FileMetadata> handleFileUpload(@RequestParam("file") MultipartFile file) {
         FileMetadata metadata = fileService.store(file);
         return ResponseEntity.ok(metadata);
+    }
+    @GetMapping("/upload")
+    public String showUploadForm(Model model) {
+        return "uploadVideo";
     }
 
 

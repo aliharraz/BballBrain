@@ -9,6 +9,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -27,7 +28,8 @@ public class FileService {
     @Autowired
     private FileMetadataRepository fileMetadataRepository;
 
-    private final Path rootLocation = Paths.get("upload-dir");
+    private final Path rootLocation = Paths.get("C:/upload-dir");
+
 
     @PostConstruct
     public void init() {
@@ -43,11 +45,16 @@ public class FileService {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file");
             }
-            Path destinationFile = rootLocation.resolve(
-                            Paths.get(Objects.requireNonNull(file.getOriginalFilename())))
+
+            // Résoudre le chemin du fichier à télécharger
+            Path destinationFile = this.rootLocation.resolve(
+                            Paths.get(StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()))))
                     .normalize().toAbsolutePath();
+
+            // Copier le fichier vers l'emplacement de destination
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
+            // Enregistrer les métadonnées du fichier dans la base de données
             FileMetadata metadata = new FileMetadata(
                     null,
                     file.getOriginalFilename(),
@@ -60,6 +67,8 @@ public class FileService {
             throw new RuntimeException("Failed to store file", e);
         }
     }
+
+
 
     // Méthode pour lister tous les fichiers et leurs métadonnées
     public ResponseEntity<List<FileMetadata>> listAllFiles() {
