@@ -14,5 +14,4 @@ public class Admin extends Utilisateur {
     private String role;
     private String department;
 
-    // getters et setters
 }

@@ -26,15 +26,6 @@ public class UserService {
     }
 
     public Utilisateur saveUser(Utilisateur user) {
-//        if (user instanceof Player) {
-//            user.setRole("PLAYER");
-//        } else if (user instanceof Coach) {
-//            user.setRole("COACH");
-//        } else if (user instanceof Admin) {
-//            user.setRole("ADMIN");
-//        } else {
-//            throw new IllegalArgumentException("Invalid user type");
-//        }
         if (user.getDateOfBirth() == null) {
             user.setDateOfBirth(LocalDate.now());
         }
