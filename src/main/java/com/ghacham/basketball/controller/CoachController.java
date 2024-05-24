@@ -37,11 +37,11 @@ public class CoachController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 	// Endpoint pour ajouter un coach
-    @PostMapping("/add")
-    public ResponseEntity<Coach> addCoach(@RequestBody Coach coach) {
-        Coach savedCoach = coachService.addCoach(coach);
-        return new ResponseEntity<>(savedCoach, HttpStatus.CREATED);
-    }
+	@PostMapping("/add")
+	public ResponseEntity<Coach> addCoach(@RequestBody Coach coach) {
+	        Coach savedCoach = coachService.addCoach(coach);
+	        return new ResponseEntity<>(savedCoach, HttpStatus.CREATED);
+	}
 
  // Endpoint pour mettre à jour un coach
     @PutMapping("/{id}")

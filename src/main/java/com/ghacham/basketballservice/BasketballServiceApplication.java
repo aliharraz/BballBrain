@@ -13,12 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.ghacham.basketball.entities")
 @ComponentScan(basePackages = "com.ghacham.basketball.controller")
 @ComponentScan("com.ghacham.basketball.services")
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.ghacham.basketball.clients")
 public class BasketballServiceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BasketballServiceApplication.class, args);
 		System.out.println("HELLO-----");
 	}
-
 }

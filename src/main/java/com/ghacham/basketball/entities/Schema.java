@@ -1,41 +1,32 @@
 package com.ghacham.basketball.entities;
 
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
-@Table(name = "schema")
-@JsonIgnoreProperties({"team"}) 
 public class Schema {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long schemaId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long schemaId;
 
-    private String title;
-    private String description;
-    
-    @ManyToOne
-    @JoinColumn(name = "team_id") // Assuming the column name in Schema table referencing Team is team_id
-    private Team team;
+	private String title;
+	private String description;
 
-    @ManyToMany
-    @JoinTable(
-        name = "schema_player",
-        joinColumns = @JoinColumn(name = "schema_id"),
-        inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
-    private Set<Player> players;
-    
-    public Set<Player> getPlayers() {
-		return players;
-	}
+	@ManyToOne
+	@JoinColumn(name = "team_id") // Assuming the column name in Schema table referencing Team is team_id
+	private Team team;
 
-	public void setPlayers(Set<Player> players) {
-		this.players = players;
-	}
+	@ElementCollection
+	@CollectionTable(name = "schema_player", joinColumns = @JoinColumn(name = "schema_id"))
+	@Column(name = "player_id")
+	private Set<Long> playerIds;
+
+	@Enumerated(EnumType.STRING)
+	private Visibility visibility;
+
+	// Getters and setters
 
 	public Long getSchemaId() {
 		return schemaId;
@@ -69,6 +60,14 @@ public class Schema {
 		this.team = team;
 	}
 
+	public Set<Long> getPlayerIds() {
+		return playerIds;
+	}
+
+	public void setPlayerIds(Set<Long> playerIds) {
+		this.playerIds = playerIds;
+	}
+
 	public Visibility getVisibility() {
 		return visibility;
 	}
@@ -76,9 +75,4 @@ public class Schema {
 	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
-
-	@Enumerated(EnumType.STRING)
-    private Visibility visibility;
-
-    // Getters and setters
 }

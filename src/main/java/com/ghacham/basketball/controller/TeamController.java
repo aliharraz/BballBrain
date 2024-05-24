@@ -1,16 +1,15 @@
 package com.ghacham.basketball.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ghacham.basketball.entities.Player;
+import com.ghacham.basketball.clients.UtilisateurClient;
 import com.ghacham.basketball.entities.Team;
-import com.ghacham.basketball.exception.UnauthorizedException;
 import com.ghacham.basketball.services.TeamService;
 
 import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/teams")
@@ -19,6 +18,8 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
     
+    @Autowired
+    private UtilisateurClient utilisateurClient;
 
     // Endpoint pour récupérer tous les teams
     @GetMapping
@@ -35,21 +36,46 @@ public class TeamController {
         }
         return ResponseEntity.ok().body(team);
     }
-    @PostMapping
-    public ResponseEntity<Team> createTeam(@RequestBody Team team) {
-        Team createdTeam = teamService.createTeam(team);
-        return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
+
+    @GetMapping("/role/{id}")
+    public boolean isThisCoach(@PathVariable Long id) {
+         return  utilisateurClient.getUserRole(id);
     }
 
-    // Endpoint pour créer un nouveau team
-    /*@PostMapping
-    public Team createTeam(@RequestBody Team team, @RequestHeader("Authorization") String token) {
-        String role = utilisateurClient.getUserRole(token);
-        if (!"COACH".equals(role)) {
-            throw new UnauthorizedException("Only coaches can create teams");
+    @PostMapping
+    public Team createTeam(@RequestBody Team team) {
+
+        System.out.println("good-----------------");
+        if(utilisateurClient.getUserRole(team.getIdCoach())){
+            System.out.println("good-----------------");
+            return teamService.createTeam(team);
+        }else{
+            System.out.println("bad-----------------");
+            return null;
         }
-        return teamService.createTeam(team);
-    }*/
+
+    }
+
+
+
+
+//    @PostMapping("/create")
+//    public Long createTeam(@RequestBody IdRequest idRequest) {
+//        Long id = idRequest.getId();
+//
+//        // Vérifie le rôle de l'utilisateur avec l'ID
+//        String role = utilisateurClient.getUserRole(idRequest.getId());
+//        System.out.println("---------"+id);
+//        System.out.println("---------"+role);
+//        if (!"COACH".equals(role)) {
+//            System.out.println("--------*********************-");
+//            throw new UnauthorizedException("Seuls les coachs peuvent créer des équipes");
+//        }
+//
+//        // Appeler le service pour créer l'équipe
+//        return id;
+//    }
+
 
     // Endpoint pour mettre à jour un team existant
     @PutMapping("/{id}")
@@ -70,17 +96,21 @@ public class TeamController {
         teamService.deleteTeam(teamId);
         return ResponseEntity.ok().build();
     }
-    /*@PostMapping("/{id}/players")
-    public Team addPlayersToTeam(@PathVariable Long id, @RequestBody Set<Long> playerIds, @RequestHeader("Authorization") String token) {
-        String role = utilisateurClient.getUserRole(token);
-        if (!"COACH".equals(role)) {
-            throw new UnauthorizedException("Only coaches can add players to teams");
-        }
-        Team team = teamService.getTeamById(id);
-        for (Long playerId : playerIds) {
-            Player player = utilisateurClient.getPlayerById(playerId);
-            team.getPlayers().add(player);
-        }
-        return teamService.updateTeam(id, team);
-    }*/
+//    @PostMapping("/{id}/players")
+//    public Team addPlayersToTeam(@PathVariable Long id, @RequestBody Set<Long> playerIds, @RequestHeader("Authorization") Long idCoach) {
+//        String role = utilisateurClient.getUserRole(idCoach);
+//        if (!"COACH".equals(role)) {
+//            throw new UnauthorizedException("Only coaches can add players to teams");
+//        }
+//        Team team = teamService.getTeamById(id);
+//        for (Long playerId : playerIds) {
+//            Player player = utilisateurClient.getPlayerById(playerId);
+//            team.getPlayers().add(player);
+//        }
+//        return teamService.updateTeam(id, team);
+//    }
 }
+//@Data
+//class IdRequest {
+//    private Long id;
+//}

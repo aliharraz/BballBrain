@@ -1,11 +1,9 @@
 package com.ghacham.basketball.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.ghacham.basketball.entities.Player;
 import com.ghacham.basketball.entities.Schema;
 import com.ghacham.basketball.repository.SchemaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +15,13 @@ public class SchemaService {
     private SchemaRepository schemaRepository;
 
     public List<Schema> getAllSchemas() {
+        System.out.println("Liste des schémas existants : ");
         return schemaRepository.findAll();
     }
 
     public Schema getSchemaById(Long id) {
-        Optional<Schema> optionalSchema = schemaRepository.findById(id);
-        return optionalSchema.orElse(null); // Return null if schema not found, can also throw an exception
+        Optional<Schema> schemaOptional = schemaRepository.findById(id);
+        return schemaOptional.orElse(null);
     }
 
     public Schema createSchema(Schema schema) {
@@ -30,44 +29,36 @@ public class SchemaService {
     }
 
     public Schema updateSchema(Long id, Schema updatedSchema) {
-        Optional<Schema> optionalSchema = schemaRepository.findById(id);
-        if (optionalSchema.isPresent()) {
-            Schema existingSchema = optionalSchema.get();
+        Optional<Schema> schemaOptional = schemaRepository.findById(id);
+        if (schemaOptional.isPresent()) {
+            Schema existingSchema = schemaOptional.get();
             existingSchema.setTitle(updatedSchema.getTitle());
             existingSchema.setDescription(updatedSchema.getDescription());
-            existingSchema.setVisibility(updatedSchema.getVisibility());
             existingSchema.setTeam(updatedSchema.getTeam());
+            existingSchema.setPlayerIds(updatedSchema.getPlayerIds());
+            existingSchema.setVisibility(updatedSchema.getVisibility());
             return schemaRepository.save(existingSchema);
-        } else {
-            return null; // Or throw an exception
         }
+        return null;
     }
 
     public void deleteSchema(Long id) {
         schemaRepository.deleteById(id);
     }
-    
-    public void addPlayerToSchema(Long schemaId, Player player) {
-        Optional<Schema> optionalSchema = schemaRepository.findById(schemaId);
-        if (optionalSchema.isPresent()) {
-            Schema schema = optionalSchema.get();
-            schema.getPlayers().add(player);
+
+    public void addPlayerToSchema(Long schemaId, Long playerId) {
+        Optional<Schema> schemaOptional = schemaRepository.findById(schemaId);
+        schemaOptional.ifPresent(schema -> {
+            schema.getPlayerIds().add(playerId);
             schemaRepository.save(schema);
-        } else {
-            throw new RuntimeException("Schema not found");
-        }
+        });
     }
 
-    public void removePlayerFromSchema(Long schemaId, Player player) {
-        Optional<Schema> optionalSchema = schemaRepository.findById(schemaId);
-        if (optionalSchema.isPresent()) {
-            Schema schema = optionalSchema.get();
-            schema.getPlayers().remove(player);
+    public void removePlayerFromSchema(Long schemaId, Long playerId) {
+        Optional<Schema> schemaOptional = schemaRepository.findById(schemaId);
+        schemaOptional.ifPresent(schema -> {
+            schema.getPlayerIds().remove(playerId);
             schemaRepository.save(schema);
-        } else {
-            throw new RuntimeException("Schema not found");
-        }
+        });
     }
-
-    // Autres méthodes pour la gestion des schémas
 }

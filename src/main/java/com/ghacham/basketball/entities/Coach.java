@@ -50,6 +50,6 @@ public class Coach {
     }
 
     public void setTeam(Team team) {
-        this.team = team;
-    }
+        this.team=team;
+}
 }

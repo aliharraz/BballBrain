@@ -26,9 +26,10 @@ public class TeamService {
     }
 
     public Team createTeam(Team team) {
-        // Vous pouvez ajouter ici toute logique de validation avant d'ajouter le team
         return teamRepository.save(team);
     }
+
+
 
     public Team updateTeam(Long teamId, Team teamDetails) {
         Optional<Team> teamOptional = teamRepository.findById(teamId);

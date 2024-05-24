@@ -1,5 +1,7 @@
 package com.ghacham.basketball.controller;
 
+import com.ghacham.basketball.entities.PlayerSchema;
+import com.ghacham.basketball.services.PlayerSchemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,9 @@ public class SchemaController {
 
     @Autowired
     private SchemaService schemaService;
-    
- 
+
+    @Autowired
+    private PlayerSchemaService playerSchemaService;
 
     @GetMapping
     public List<Schema> getAllSchemas() {
@@ -33,6 +36,13 @@ public class SchemaController {
     public Schema createSchema(@RequestBody Schema schema) {
         return schemaService.createSchema(schema);
     }
+    @PostMapping("/{ids}/{playerId}/player")
+    public void addPlayerToSchema(@PathVariable Long ids, @PathVariable Long playerId) {
+
+        PlayerSchema Player=new PlayerSchema(55L,schemaService.getSchemaById(ids),playerId,12,15);
+        PlayerSchema createdPlayerSchema = playerSchemaService.createPlayerSchema(Player);
+        System.out.println("********************************"+createdPlayerSchema.toString());
+    }
 
     @PutMapping("/{id}")
     public Schema updateSchema(@PathVariable Long id, @RequestBody Schema updatedSchema) {
@@ -43,7 +53,7 @@ public class SchemaController {
     public void deleteSchema(@PathVariable Long id) {
         schemaService.deleteSchema(id);
     }
-    
+
     /*@PostMapping("/{id}/players")
     public void addPlayersToSchema(@PathVariable Long id, @RequestBody Set<Long> playerIds) {
         playerIds.forEach(playerId -> {
@@ -60,5 +70,5 @@ public class SchemaController {
         });
     }*/
 
-    // Autres méthodes pour la gestion des schémas
+    // Autres méthodes pour la gestion des schémas
 }
